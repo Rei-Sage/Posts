@@ -1,0 +1,410 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content2 %}
+<div class="container mx-auto bg-[#0f0f23] relative">
+    <div class="bg-[#0f0f23] relative overflow-hidden">
+        <div class="max-w-7xl mx-auto">
+            <div class="relative z-10 pb-8 bg-[#0f0f24] sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
+                <div class="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
+                    <div class="sm:text-center lg:text-left">
+                        <h1 class="text-4xl tracking-tight font-extrabold text-blue-900 sm:text-5xl md:text-6xl">
+                            <span class="block xl:inline">Друг ,быстрее поделись своими</span>
+                            <span class="block text-indigo-600 xl:inline">фотографиями</span>
+                        </h1>
+                        <p class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+                            Создайте свое портфолио, делитесь работами и находите вдохновение в работах других фотографов.
+                        </p>
+                        <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
+                            <div class="rounded-md shadow">
+                                {% if user.is_authenticated %}
+                                <a href="{% url "profile" %}" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"> 
+                                    Начать
+                                </a>
+                                {% endif %}
+                                {% if not user.is_authenticated %}
+                                <a href="{% url "users:login" %}" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"> 
+                                    Начать
+                                </a>
+                                {% endif %}
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 ">
+            <img class="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full" src="https://pa1.aminoapps.com/6689/1c90750668cae9ff5bf9965e0bf726f910da5418_hq.gif" %}" alt="Hero image">
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block content %}
+    {% comment %} <div id="carousel" class="carousel-container relative h-[600px] py-12 my-12 overflow-hidden touch-pan-y">
+        <div class="relative h-full">
+            <button class="carousel-nav-button prev">
+                <svg viewBox="0 0 24 24">
+                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                </svg>
+            </button>
+
+            <button class="carousel-nav-button next">
+                <svg viewBox="0 0 24 24">
+                    <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/>
+                </svg>
+            </button>
+            <div class="slides">
+                {% for banner in banner_anime %}
+                <div class="slide active">
+                    <img src="{{ banner.images.first.image.url }}" alt="Another Anime" class="w-full h-full object-cover">
+                    <div class="gradient-overlay absolute inset-0">
+                        <div class="slide-content absolute bottom-32 left-16 text-white max-w-3xl">
+                            <div class="mb-6">
+                                <span class="badge">{{ banner.get_status_display }}</span>
+                                <span class="badge">{{ banner.get_type_display }}</span>
+                            </div>
+                            <h2 class="title">
+                                Another Epic<br>{{ banner.title }}
+                            </h2>
+                            <p class="description">
+                                {{ banner.description|truncatewords:5 }}...
+                            </p>
+                            <a href="{% url 'anime:anime_detail' banner.id %}">
+                            <button class="watch-now">
+                                <span>Смотреть</span>
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     class="icon"
+                                     fill="none"
+                                     viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </button></a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% for banner in banner_anime %}
+                <div class="slide active">
+                    <img src="{{ banner.images.first.image.url }}" alt="Another Anime" class="w-full h-full object-cover">
+                    <div class="gradient-overlay absolute inset-0">
+                        <div class="slide-content absolute bottom-32 left-16 text-white max-w-3xl">
+                            <div class="mb-6">
+                                <span class="badge">{{ banner.get_status_display }}</span>
+                                <span class="badge">{{ banner.get_type_display }}</span>
+                            </div>
+                            <h2 class="title">
+                                Another Epic<br>{{ banner.title }}
+                            </h2>
+                            <p class="description">
+                                {{ banner.description|truncatewords:5 }}...
+                            </p>
+                            <a href="{% url 'anime:anime_detail' banner.id %}">
+                            <button class="watch-now">
+                                <span>Смотреть</span>
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     class="icon"
+                                     fill="none"
+                                     viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </button></a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            
+            </div>
+        </div>
+    </div> {% endcomment %}
+    {% comment %} {% include "components/card.html" %} {% endcomment %}
+
+    <div class="container mx-auto py-12">
+        <div class="flex flex-col lg:flex-row gap-6">
+            <div class="lg:w-2/3">
+                <section class="mb-12">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold flex items-center text-white">
+                            <div class="w-1 h-8 bg-red-500 mr-3 rounded-full "></div>
+                            Новые фото
+                        </h2>
+                        <a href="{% url "more" %}" class="text-sm text-gray-400 hover:text-white flex items-center group">
+                            Смотреть все
+                            <svg class="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform"
+                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        {% for item in post %}
+                        {% if item.views|add:0 < 20 %}
+                        <div class="relative group card-animate hover:transform hover:scale-105 transition-all duration-300">
+                            <div class="relative overflow-hidden rounded-xl shadow-lg">
+                                <img src="{{ item.image.url }}" alt="Anime Cover"
+                                     class="w-full h-[280px] object-cover transition-all duration-500 ease-out group-hover:brightness-50">
+                                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out bg-black bg-opacity-60">
+                                    <p class="text-white text-lg font-bold px-4 text-center">{{ item.description }}</p>
+                                </div>
+                                <div class="absolute top-1 left-1 text-white px-3 py-1 text-sm rounded-full font-bold glow">
+                                    <span class="flex items-center space-x-1 bg-black/40 backdrop-blur-sm px-3 py-1.5 rounded-full">
+                                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                                        </svg>
+                                        <span class='text-white'>{{ item.views }}</span>
+                                        <div class='flex pl-2 gap-1'>
+                                            <img src="https://cdn.icon-icons.com/icons2/39/PNG/128/favoritesilver_star_favorite_6338.png" alt="" width='15px' height='0px'>
+                                            <span class="text-white">{{ item.average_rating }}</span>
+                                            <span>-</span>
+                                            <span class="text-white">{{ item.ratings.count }} голосов</span>
+                                        </div>
+
+                                    </span>
+                                </div>
+                                <div class="absolute top-3 right-3 flex space-x-2">
+                                    {% for i in item.tags.all %}
+                                    <span class="bg-black/60 backdrop-blur-sm text-white px-3 py-1 rounded-full text-xs font-medium">
+                                        {{ i.name }}
+                                    </span>
+                                    {% endfor %}
+                                </div>
+                                <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center space-x-3 text-sm">
+                                        </div>
+                                        <a href="{% url 'detail' id=item.id %}">
+                                            <button class="bg-red-500 hover:bg-red-600 text-white p-2 rounded-full transition-colors group-hover:scale-110">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5C7.305 4.5 3.361 7.3 2 12c1.361 4.7 5.305 7.5 10 7.5s8.639-2.8 10-7.5C20.639 7.3 16.695 4.5 12 4.5z"/>
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9.75a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5z"/>
+                                                </svg>
+                                            </button>
+                                        </a>
+                                        
+                                    </div>
+                                    <h3 class="text-white text-lg font-bold mt-2 text-shadow line-clamp-2">
+                                        {{ item.title }}
+                                    </h3>
+                                    
+
+                            
+                                    <div class=" flex items-center gap-2">
+                                        <img class="h-8 w-8 rounded-full" src="{{ item.author.image.image.url }}" alt="">
+                                        <div class="flex space-x-1 justify-between text-sm font-medium text-sm text-gray-500">
+                                            <a class='text-white' href="{% url "profil_users" id=item.author.id %}">{{ item.author.username }}</a>
+                                            <span>-</span>
+                                            <time class='text-white right-0' datetime="{{ item.created_at|date:'Y-m-d' }}">
+                                                {{ item.created_at|date:"d M Y" }}
+                                            </time>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% if request.user.is_authenticated %}
+                            <div class="mt-3 bg-gray-700 h-1 rounded-full overflow-hidden">
+                                <div class="bg-red-500 h-full" style="width: {{ progress_percentage }}%;"></div>
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+ 
+                        
+                        {% endfor %}
+                    </div>
+                </section>
+                <section class="mb-12">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold flex items-center text-white">
+                            <div class="w-1 h-8 bg-red-500 mr-3 rounded-full"></div>
+                            ПОПУЛЯРНЫЕ ПОСТЫ
+                        </h2>
+                        <a href="{% url "more" %}" class="text-sm text-gray-400 hover:text-white flex items-center group">
+                            Смотреть все
+                            <svg class="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform"
+                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        {% for item in page_obj %}
+                        {% if item.views|add:0 > 20 %}
+                        <div class="relative group card-animate hover:transform hover:scale-105 transition-all duration-300">
+                            <div class="relative overflow-hidden rounded-xl shadow-lg">
+                                <img src="{{ item.image.url }}" alt="Anime Cover"
+                                     class="w-full h-[280px] object-cover transition-all duration-500 ease-out group-hover:brightness-50">
+                                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out bg-black bg-opacity-60">
+                                    <p class="text-white text-lg font-bold px-4 text-center">{{ item.description }}</p>
+                                </div>
+                                <div class="absolute top-1 left-1 text-white px-3 py-1 text-sm rounded-full font-bold glow">
+                                    <span class="flex items-center space-x-1 bg-black/40 backdrop-blur-sm px-3 py-1.5 rounded-full">
+                                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                                        </svg>
+                                        <span class='text-white'>{{ item.views }}</span>
+                                        <div class='flex pl-2 gap-1'>
+                                            <img src="https://cdn.icon-icons.com/icons2/39/PNG/128/favoritesilver_star_favorite_6338.png" alt="" width='15px' height='0px'>
+                                            <span class="text-white">{{ item.average_rating }}</span>
+                                            <span>-</span>
+                                            <span class="text-white">{{ item.ratings.count }} голосов</span>
+                                        </div>
+                                    </span>
+                                </div>
+                                <div class="absolute top-3 right-3 flex space-x-2">
+                                    {% for i in item.tags.all %}
+                                    <span class="bg-black/60 backdrop-blur-sm text-white px-3 py-1 rounded-full text-xs font-medium">
+                                        {{ i.name }}
+                                    </span>
+                                    {% endfor %}
+                                </div>
+                                <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center space-x-3 text-sm">
+                                        </div>
+                                        <a href="{% url 'detail' id=item.id %}">
+                                            <button class="bg-red-500 hover:bg-red-600 text-white p-2 rounded-full transition-colors group-hover:scale-110">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5C7.305 4.5 3.361 7.3 2 12c1.361 4.7 5.305 7.5 10 7.5s8.639-2.8 10-7.5C20.639 7.3 16.695 4.5 12 4.5z"/>
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9.75a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5z"/>
+                                                </svg>
+                                            </button>
+                                        </a>
+                                        
+                                    </div>
+                                    <h3 class="text-white text-lg font-bold mt-2 text-shadow line-clamp-2">
+                                        {{ item.title }}
+                                    </h3>
+                                    
+
+                            
+                                    <div class=" flex items-center gap-2">
+                                        <img class="h-8 w-8 rounded-full" src="{{ item.author.image.image.url }}" alt="">
+                                        <div class="flex space-x-1 justify-between text-sm font-medium text-sm text-gray-500">
+                                            <a class='text-white' href="{% url "profil_users" id=item.author.id %}">{{ item.author.username }}</a>
+                                            <span>-</span>
+                                            <time class='text-white right-0' datetime="{{ item.created_at|date:'Y-m-d' }}">
+                                                {{ item.created_at|date:"d M Y" }}
+                                            </time>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% if request.user.is_authenticated %}
+                            <div class="mt-3 bg-gray-700 h-1 rounded-full overflow-hidden">
+                                <div class="bg-red-500 h-full" style="width: {{ progress_percentage }}%;"></div>
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+ 
+                        
+                        {% endfor %}
+                    </div>
+                    <div class="flex justify-center mt-8">
+                        <div class="inline-flex items-center space-x-2">
+                            {% if page_obj.has_previous %}
+                            <a href="?page=1" class="px-4 py-2 text-sm font-semibold text-white bg-gray-700 hover:bg-gray-600 rounded-l-lg transition-colors">Начало</a>
+                            <a href="?page={{ page_obj.previous_page_number }}" class="px-4 py-2 text-sm font-semibold text-white bg-gray-700 hover:bg-gray-600 transition-colors">Назад</a>
+                            {% else %}
+                            <span class="px-4 py-2 text-sm font-semibold text-gray-400 bg-gray-700 rounded-l-lg">Начало</span>
+                            <span class="px-4 py-2 text-sm font-semibold text-gray-400 bg-gray-700">Назад</span>
+                            {% endif %}
+                            
+                            <span class="px-4 py-2 text-sm font-semibold text-white bg-gray-700">Стр {{ page_obj.number }} из {{page_obj.paginator.num_pages }}</span>
+                            
+                            {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}" class="px-4 py-2 text-sm font-semibold text-white bg-gray-700 hover:bg-gray-600 transition-colors">Вперед</a>
+                            <a href="?page={{ page_obj.paginator.num_pages }}" class="px-4 py-2 text-sm font-semibold text-white bg-gray-700 hover:bg-gray-600 rounded-r-lg transition-colors">Конец</a>
+                            {% else %}
+                            <span class="px-4 py-2 text-sm font-semibold text-gray-400 bg-gray-700">Вперед</span>
+                            <span class="px-4 py-2 text-sm font-semibold text-gray-400 bg-gray-700 rounded-r-lg">Последний</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="lg:w-1/3">
+                <div class="mb-6 text-white">
+                    <h2 class="text-2xl font-bold flex items-center mb-4">
+                        <div class="w-1 h-8 bg-red-500 mr-3 rounded-full"></div>
+                        Топ посты
+                    </h2>
+                    <div class="flex space-x-2 mb-6 overflow-x-auto">
+                        <button class="bg-gray-800 px-6 py-2 rounded-full text-sm hover:bg-red-500 transition-colors whitespace-nowrap">
+                            День
+                        </button>
+                        <button class="bg-gray-800 px-6 py-2 rounded-full text-sm hover:bg-red-500 transition-colors whitespace-nowrap">
+                            Неделя
+                        </button>
+                        <button class="bg-gray-800 px-6 py-2 rounded-full text-sm hover:bg-red-500 transition-colors whitespace-nowrap">
+                            Месяц
+                        </button>
+                        <button class="bg-gray-800 px-6 py-2 rounded-full text-sm hover:bg-red-500 transition-colors whitespace-nowrap">
+                            Год
+                        </button>
+                    </div>
+<div class="space-y-4">
+    {% for view in post %}
+        {% if view.views|add:0 < 20 %}
+            <div class="space-y-4">
+                <div class="group cursor-pointer bg-gray-800/50 rounded-xl p-2 hover:bg-gray-800 transition-colors">
+                    <div class="flex space-x-4">
+                        <div class="relative">
+                            <img src="{{ view.image.url }}" alt="Anime Thumbnail"
+                                 class="w-32 h-24 object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-300">
+                            <div class="text-green-500 absolute bottom-2 right-2 bg-black/60 backdrop-blur-sm text-xs px-2 py-1 rounded-full">
+                                New
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-white text-sm font-bold line-clamp-2 group-hover:text-red-500 transition-colors">
+                                {{ view.title }}
+                            </h3>
+                            <div class="flex items-center space-x-2 mt-2 text-xs text-gray-400">
+                                <span class="flex items-center">
+                                    <svg class="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                                    </svg>
+                                    {{ view.views }} Views
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
+
+<div class="flex justify-center mt-6">
+    <div class="inline-flex items-center">
+        {% if page_obj.has_previous %}
+            <a href="?page=1" class="px-4 py-2 text-sm font-semibold text-white bg-gray-700 hover:bg-gray-600 rounded-l-lg transition-colors">Начало</a>
+            <a href="?page={{ page_obj.previous_page_number }}" class="px-4 py-2 text-sm font-semibold text-white bg-gray-700 hover:bg-gray-600 transition-colors">Назад</a>
+        {% else %}
+            <span class="px-4 py-2 text-sm font-semibold text-gray-400 bg-gray-700 rounded-l-lg">Начало</span>
+            <span class="px-4 py-2 text-sm font-semibold text-gray-400 bg-gray-700">Назад</span>
+        {% endif %}
+        
+        <span class="px-4 py-2 text-sm font-semibold text-white bg-gray-700">Стр {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+        
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="px-4 py-2 text-sm font-semibold text-white bg-gray-700 hover:bg-gray-600 transition-colors">Вперед</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}" class="px-4 py-2 text-sm font-semibold text-white bg-gray-700 hover:bg-gray-600 rounded-r-lg transition-colors">Конец</a>
+        {% else %}
+            <span class="px-4 py-2 text-sm font-semibold text-gray-400 bg-gray-700">Вперед</span>
+            <span class="px-4 py-2 text-sm font-semibold text-gray-400 bg-gray-700 rounded-r-lg">Конец</span>
+        {% endif %}
+    </div>
+</div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

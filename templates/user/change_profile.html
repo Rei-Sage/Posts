@@ -1,0 +1,64 @@
+{% extends "./base.html" %}
+{% load static %}
+{% block change_profile %}
+<div class="flex flex-col md:flex-row bg-[#0f0f23]">
+    <div class="relative w-full md:w-1/2 h-[232px] md:h-[615px] group">
+        <img
+            src="{{ item.image.url }}"
+            alt="Space Illustration"
+            class="object-cover w-full h-[232px] md:h-[615px] group-hover:shadow-lg"
+        />
+        <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-lg opacity-0 group-hover:opacity-100 transition-opacity">
+            <form action="{% url 'users:change_image' %}" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <input type="file" name="image" accept="image/*" class='w-full bg-opacity'>
+              <button type="submit" class='bg-opacity-50'>Изменить фото</button>
+          </form>
+        </div>
+    </div>
+    
+    <div
+      class="flex items-center justify-center md:justify-start w-full md:w-1/2 p-6 md:p-12 bg-[#0f0f23] h-[615px]"
+    >
+      <div class="max-w-md w-full space-y-6">
+        <h2 class="text-4xl font-semibold text-white">Изменение профиля</h2>
+        <p class="text-white sm:text-xl md:text-2xl text-center sm:text-start">
+          Обнови свои данные
+        </p>
+        {% if messages %}
+        <ul>
+          {% for message in messages %}
+          <li class='text-[red]'>{{ message }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+        <form action="{% url 'users:change_profile' %}" method="POST" novalidate>
+          {% csrf_token %}
+          {% for field in form %}
+          <label for="{{ field.id_for_label }}" class="text-gray-400 text-sm mb-2 block">
+            {{ field.label }}
+          </label>
+              <div class="relative">
+                <div class='mb-[10px]'>
+                  {{ field }}
+                  <span class="absolute left-4  top-[27px] transform -translate-y-1/2">
+                    <img
+                    src="https://cdn.animaapp.com/projects/63aaf7e2426e9824f0350c11/releases/63aaf8f2426e9824f0350c13/img/user-4@2x.svg"
+                    alt="User Icon"
+                    class="w-5 h-5"
+                  />
+                  </span>
+                </div>
+                  {% if field.errors %}
+                      <div class="text-[red] text-sm mb-[6px]">{{ field.errors }}</div>
+                  {% endif %}
+              </div>
+          {% endfor %}
+          <button type="submit" class="w-full py-3 bg-[#A259FF] text-white font-semibold hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 border-solid rounded-[28px]">
+            <span class='text-center'>Изменить</span> 
+          </button>
+      </form>
+      </div>
+    </div>
+  </div>
+{% endblock change_profile %}

@@ -1,0 +1,229 @@
+{% extends 'workspace/base.html' %} {% block title %}Update{% endblock title %}
+{% block update %}
+{% comment %} <div class="w-full bg-[#2B2B2B] shadow-md rounded-lg p-6">
+  <form
+    action="{% url 'update' artist.id %}"
+    method="POST"
+    enctype="multipart/form-data"
+    class="space-y-6"
+  >
+    {% csrf_token %}
+
+    <div class="grid grid-cols-1 gap-4">
+      <div>
+        <label for="name" class="block text-sm font-medium text-white"
+          >Название художника</label
+        >
+        <input
+          type="text"
+          name="name"
+          id="name"
+          value="{{ artist.name }}"
+          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 sm:text-sm"
+          required
+        />
+      </div>
+
+      <div>
+        <label
+          for="change_percentage"
+          class="block text-sm font-medium text-white"
+          >Изменение (%)</label
+        >
+        <input type="number" name="change_percentage" id="change_percentage"
+        value="{{artist.change_percentage|stringformat:'f'}}" class="mt-1 block
+        w-full border border-gray-300 rounded-md shadow-sm py-2 px-3
+        focus:outline-none focus:ring-2 focus:ring-blue-500 sm:text-sm" " >
+      </div>
+
+      <div>
+        <label for="nfts_sold" class="block text-sm font-medium text-white"
+          >Количество проданных NFT</label
+        >
+        <input
+          type="number"
+          name="nfts_sold"
+          id="nfts_sold"
+          value="{{ artist.nfts_sold }}"
+          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 sm:text-sm"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="volume" class="block text-sm font-medium text-white"
+          >Объем продаж в ETH</label
+        >
+        <input
+          type="number"
+          name="volume"
+          id="volume"
+          value="{{ artist.volume|stringformat:'f' }}"
+          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 sm:text-sm"
+          step="0.01"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="image" class="block text-sm font-medium text-white"
+          >Деейсвующее фото</label
+        >
+
+        {% if artist_image and artist_image.image %}
+        <div class="mb-4 flex justify-center">
+          <img
+            src="{{ artist_image.image.url }}"
+            alt="Текущее изображение"
+            class="w-32 h-32 object-cover rounded-md shadow-md"
+          />
+        </div>
+        {% endif %}
+
+        <div
+          class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md"
+        >
+          <div class="space-y-1 text-center">
+            <svg
+              class="mx-auto h-12 w-12 text-gray-400"
+              stroke="currentColor"
+              fill="none"
+              viewBox="0 0 48 48"
+              aria-hidden="true"
+            >
+              <path
+                d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <div class="flex text-sm text-gray-600">
+              <label
+                for="image"
+                class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500"
+              >
+                <span>Загрузить новое фото</span>
+                <input id="image" name="image" type="file" class="sr-only" />
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <button
+        type="submit"
+        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-300 ease-in-out"
+      >
+        Обновить
+      </button>
+    </div>
+  </form>
+</div> {% endcomment %}
+{% comment %} <div class="w-full bg-[#2B2B2B] shadow-md rounded-lg p-6">
+  <h1 class="mb-5 text-center text-white font-medium">Обновить NFT</h1>
+  <form action="{% url 'update' nft_id=nft.id %}" method="POST" enctype="multipart/form-data" class="space-y-6">
+    {% csrf_token %} {% endcomment %}
+{% comment %}     
+    <div class="grid grid-cols-1 gap-6">
+      <div>
+          <label for="name" class="block text-sm font-medium text-white">Название</label>
+          {{ nft_form.name }}
+      </div>
+      <div>
+          <label for="creator" class="block text-sm font-medium text-white">Создатель (Artist)</label>
+          {{ nft_form.creator }}
+      </div>
+      <div>
+          <label for="price" class="block text-sm font-medium text-white">Цена</label>
+          {{ nft_form.price }}
+      </div>
+      <div>
+          <label for="highest_bid" class="block text-sm font-medium text-white">Высшая ставка</label>
+          {{ nft_form.highest_bid }}
+      </div>
+      <div>
+          <label for="image_url" class="block text-sm font-medium text-white">URL Изображения</label>
+          {{ nft_form.image_url }}
+      </div>
+      <div>
+          <label for="minted_date" class="block text-sm font-medium text-white">Дата создания</label>
+          {{ nft_form.minted_date }}
+      </div>
+
+      <div>
+          <label for="description" class="block text-sm font-medium text-white">Описание</label>
+          {{ info_form.description }}
+      </div>
+      <div>
+          <label for="blockchain" class="block text-sm font-medium text-white">Блокчейн</label>
+          {{ info_form.blockchain }}
+      </div>
+      <div>
+          <label for="etherscan_link" class="block text-sm font-medium text-white">Etherscan</label>
+          {{ info_form.etherscan_link }}
+      </div>
+      <div>
+          <label for="original_link" class="block text-sm font-medium text-white">Оригинальная ссылка</label>
+          {{ info_form.original_link }}
+      </div>
+      <div>
+          <label for="tags" class="block text-sm font-medium text-white">Тэги</label>
+          {{ info_form.tags }}
+      </div>
+    </div> {% endcomment %}
+    {% comment %} {{ nft_form.as_p }}        
+    {{ info_form.as_p }}
+    <div class="flex justify-center">
+      <button type="submit" class="w-full py-2 px-4 bg-yellow-500 text-white font-semibold rounded-lg hover:bg-yellow-700 transition duration-300">
+        Обновить
+      </button>
+    </div>
+  </form>
+</div> {% endcomment %}
+{% comment %} <div class="text-white w-full bg-[#2B2B2B] shadow-md rounded-lg p-6">
+  <div class="container mx-auto px-4 py-8">
+    <form action="{% url 'update' nft_id=nft.id %}" method="POST" enctype="multipart/form-data" novalidate
+          class="max-w-8xl mx-auto bg-gray-800 p-6 rounded-lg shadow-lg">
+        {% csrf_token %}
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+            <div class="w-1 h-8 bg-red-500 mr-2"></div>
+            Обновить NFT
+        </h2>
+        <div class="space-y-4 mb-6">
+            {{ nft_form.as_p }}
+            {{ info_form.as_p }}
+            
+        </div>
+        
+        <div class="flex justify-end">
+            <button type="submit"
+                    class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg transition duration-200">
+                    Обновить NFT
+            </button>
+        </div>
+    </form>
+  </div>
+
+</div> {% endcomment %}
+<div class="container mx-auto px-4 py-8">
+  <form method="POST" enctype="multipart/form-data" novalidate class="max-w-2xl mx-auto bg-gray-800 p-6 rounded-lg shadow-lg text-white" >
+      {% csrf_token %}
+      <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <div class="w-1 h-8 bg-red-500 mr-2"></div>
+          Изменить аниме
+      </h2>
+      {{ form.as_p }}
+      <div class="flex justify-end">
+          <button type="submit"
+                  class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg transition duration-200">
+              Обновить
+          </button>
+      </div>
+  </form>
+</div>
+
+
+{% endblock update %}

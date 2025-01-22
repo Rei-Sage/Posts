@@ -1,0 +1,230 @@
+{% extends "base.html" %} {% load static %} {% block creator %}
+<div
+  class="bg-[#0f0f23] flex flex-col md:flex-row bg-[#2B2B2B] overflow-hidden"
+>
+  <div class="w-full md:w-1/2 h-[232px] md:min-h-[615px]">
+    <img
+      src="https://99px.ru/sstorage/86/2020/11/image_861311202137577659114.gif"
+      alt="Space Illustration"
+      class="object-cover object-center w-full h-[232px] md:h-full"
+    />
+  </div>
+  <div
+    class="flex items-center justify-center md:justify-start w-full md:w-1/2 p-5 md:p-12 bg-[#0f0f23] h-auto"
+  >
+    <div class="max-w-md w-full space-y-6">
+      <h2 class="text-4xl font-semibold text-white">Регистрация</h2>
+      <p class="text-white sm:text-xl md:text-2xl text-center sm:text-start">
+        Добро пожаловать!!! Создай акк и поделись своими постами
+      </p>
+
+      <form method="POST" class="space-y-4" novalidate>
+        {% csrf_token %} 
+        {% comment %} {% for field in form %}
+        <div class="relative">
+          <div>
+            {{ field }}
+            <span class="absolute left-4 top-[27px] transform -translate-y-1/2">
+              <img
+                src="https://cdn.animaapp.com/projects/63aaf7e2426e9824f0350c11/releases/63aaf8f2426e9824f0350c13/img/user-4@2x.svg"
+                alt="User Icon"
+                class="w-5 h-5"
+              />
+            </span>
+          </div>
+          {% if field.errors %}
+          <div class="text-red-500 text-sm">{{ field.errors }}</div>
+          {% endif %}
+        </div>
+        {% endfor %} {% endcomment %}
+        {% comment %} <div class="relative">
+          <div class="flex flex-col gap-[5px]">
+            {{ form.username }}
+            <span class="absolute left-4 top-[27px] transform -translate-y-1/2">
+              <img
+                src="https://cdn.animaapp.com/projects/63aaf7e2426e9824f0350c11/releases/63aaf8f2426e9824f0350c13/img/user-4@2x.svg"
+                alt="User Icon"
+                class="w-5 h-5"
+              />
+            </span>
+
+            {% if form.username.errors %}
+            <div class="text-red-500 text-sm">{{ form.username.errors }}</div>
+            {% endif %} {{ form.email }}
+            <span class="absolute left-4 top-[27px] transform -translate-y-1/2">
+              <img
+                src="https://cdn.animaapp.com/projects/63aaf7e2426e9824f0350c11/releases/63aaf8f2426e9824f0350c13/img/user-4@2x.svg"
+                alt="User Icon"
+                class="w-5 h-5"
+              />
+            </span>
+
+            {% if form.email.errors %}
+            <div class="text-red-500 text-sm">{{ form.email.errors }}</div>
+            {% endif %} {{ form.password1 }}
+            <span class="absolute left-4 top-[27px] transform -translate-y-1/2">
+              <img
+                src="https://cdn.animaapp.com/projects/63aaf7e2426e9824f0350c11/releases/63aaf8f2426e9824f0350c13/img/user-4@2x.svg"
+                alt="User Icon"
+                class="w-5 h-5"
+              />
+            </span>
+
+            {% if form.password2.errors %}
+            <div class="text-red-500 text-sm">{{ form.password2.errors }}</div>
+            {% endif %} {{ form.password2 }}
+            <span class="absolute left-4 top-[27px] transform -translate-y-1/2">
+              <img
+                src="https://cdn.animaapp.com/projects/63aaf7e2426e9824f0350c11/releases/63aaf8f2426e9824f0350c13/img/user-4@2x.svg"
+                alt="User Icon"
+                class="w-5 h-5"
+              />
+            </span>
+          </div>
+        </div>
+        <button
+          type="submit"
+          class="w-full py-3 bg-[#A259FF] text-white font-semibold hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 border-solid rounded-[28px]"
+        >
+          <span class="text-center">Создать аккаунт</span>
+        </button> {% endcomment %}
+        <label for="{{ field.id_for_label }}" class="text-gray-400 text-sm mb-2 block">
+          {{ form.username.label }}
+        </label>
+        <div class="relative">
+          <div>
+            {{ form.username }}
+            <span class="absolute left-4 top-[27px] transform -translate-y-1/2">
+              <img
+                src="https://cdn.animaapp.com/projects/63aaf7e2426e9824f0350c11/releases/63aaf8f2426e9824f0350c13/img/user-4@2x.svg"
+                alt="User Icon"
+                class="w-5 h-5"
+              />
+            </span>
+          </div>
+          {% if form.username.errors %}
+          <div class="text-red-500 text-sm">{{ form.username.errors }}</div>
+          {% endif %}
+        </div>
+
+        <div class='flex gap-1 items-center'>
+          <label for="{{ field.id_for_label }}" class="text-gray-400 text-sm mb-2 block">
+            {{ form.first_name.label }}
+          </label>
+          <div class="relative">
+            <div>
+              {{ form.first_name }}
+              <span class="absolute left-4 top-[27px] transform -translate-y-1/2">
+                <img
+                  src="https://cdn.animaapp.com/projects/63aaf7e2426e9824f0350c11/releases/63aaf8f2426e9824f0350c13/img/user-4@2x.svg"
+                  alt="User Icon"
+                  class="w-5 h-5"
+                />
+              </span>
+            </div>
+            {% if form.first_name.errors %}
+            <div class="text-red-500 text-sm">{{ form.first_name.errors }}</div>
+            {% endif %}
+          </div>
+
+          <label for="{{ field.id_for_label }}" class="text-gray-400 text-sm ml-2 mb-2 block">
+            {{ form.last_name.label }}
+          </label>
+
+          <div class="relative">
+
+            <div>
+              {{ form.last_name }}
+              <span class="absolute left-4 top-[27px] transform -translate-y-1/2">
+                <img
+                  src="https://cdn.animaapp.com/projects/63aaf7e2426e9824f0350c11/releases/63aaf8f2426e9824f0350c13/img/user-4@2x.svg"
+                  alt="User Icon"
+                  class="w-5 h-5"
+                />
+              </span>
+            </div>
+            {% if form.last_name.errors %}
+            <div class="text-red-500 text-sm">{{ form.last_name.errors }}</div>
+            {% endif %}
+          </div>
+        </div>
+
+
+
+
+        <label for="{{ field.id_for_label }}" class="text-gray-400 text-sm mb-2 block">
+          {{ form.email.label }}
+        </label>
+        <div class="relative">
+
+          <div>
+            {{ form.email }}
+            <span class="absolute left-4 top-[27px] transform -translate-y-1/2">
+              <img
+                src="https://cdn.animaapp.com/projects/63aaf7e2426e9824f0350c11/releases/63aaf8f2426e9824f0350c13/img/user-4@2x.svg"
+                alt="User Icon"
+                class="w-5 h-5"
+              />
+            </span>
+          </div>
+          {% if form.email.errors %}
+          <div class="text-red-500 text-sm">{{ form.email.errors }}</div>
+          {% endif %}
+        </div>
+        <label for="{{ field.id_for_label }}" class="text-gray-400 text-sm mb-2 block">
+          {{ form.password1.label }}
+        </label>
+        <div class="relative">
+ 
+          <div>
+            {{ form.password1 }}
+            <span class="absolute left-4 top-[27px] transform -translate-y-1/2">
+              <img
+                src="https://cdn.animaapp.com/projects/63aaf7e2426e9824f0350c11/releases/63aaf8f2426e9824f0350c13/img/user-4@2x.svg"
+                alt="User Icon"
+                class="w-5 h-5"
+              />
+            </span>
+          </div>
+          {% if form.password1.errors %}
+          <div class="text-red-500 text-sm">{{ form.password1.errors }}</div>
+          {% endif %}
+        </div>
+        <label for="{{ field.id_for_label }}" class="text-gray-400 text-sm mb-2 block">
+          {{ form.password2.label }}
+        </label>
+        <div class="relative">
+
+          <div>
+            {{ form.password2 }}
+            <span class="absolute left-4 top-[27px] transform -translate-y-1/2">
+              <img
+                src="https://cdn.animaapp.com/projects/63aaf7e2426e9824f0350c11/releases/63aaf8f2426e9824f0350c13/img/user-4@2x.svg"
+                alt="User Icon"
+                class="w-5 h-5"
+              />
+            </span>
+          </div>
+          {% if form.password2.errors %}
+          <div class="text-red-500 text-sm">{{ form.password2.errors }}</div>
+          {% endif %}
+        </div>
+        <button
+          type="submit"
+          class="w-full py-3 bg-[#A259FF] text-white font-semibold hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 border-solid rounded-[28px]"
+        >
+          <span class="text-center">Создать аккаунт</span>
+        </button>
+
+
+
+      </form>
+      <div class="mt-4 text-center">
+        <a href="{% url 'users:login' %}" class="text-white">Войти</a>
+        <span class="text-white mx-2">|</span>
+        <a href="{% url 'users:logout' %}" class="text-white">Выйти</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock creator %}

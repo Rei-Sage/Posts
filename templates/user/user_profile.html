@@ -1,0 +1,151 @@
+{% extends "./base.html" %}
+
+{% block user_profile %}
+<div class=" bg-[#0f0f23] py-8">
+    <div class="container mx-auto px-4">
+        <div class="bg-[#0f0f23] rounded-2xl shadow-xl p-8 mb-8">
+            <div class="flex flex-col md:flex-row gap-8">
+                <div class="flex flex-col items-center md:items-start">
+                    <div class="relative mb-4">
+                        <img src="{{ img.image.url|default:'path/to/default/avatar.jpg' }}" 
+                             alt="Profile Avatar" 
+                             class="w-32 h-32 rounded-full object-cover border-4 border-green-500">
+                        <button class="absolute bottom-0 right-0 bg-green-500 p-2 rounded-full hover:bg-green-600 transition-colors">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <h1 class="text-2xl font-bold text-white mb-2">{{ user }}</h1>
+                    <p class="text-gray-400">{{ user.email |default:"не найдено" }}</p>
+                </div>
+
+                <div class="flex-1 grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="bg-green-700 p-4 rounded-xl text-center transform transition-all duration-300 ease-in-out hover:scale-105 hover:bg-green-800">
+                        <p class="text-2xl font-bold text-white">{{ post.count|default:"0" }}</p>
+                        <p class="text-gray-400">Публикации</p>
+                    </div>
+                    <div class="bg-green-700 p-4 rounded-xl text-center transform transition-all duration-300 ease-in-out hover:scale-105 hover:bg-green-800">
+                        <p class="text-2xl font-bold text-white">{{ user.followers_count|default:"0" }}</p>
+                        <p class="text-gray-400">Подписчики</p>
+                    </div>
+                    <div class="bg-green-700 p-4 rounded-xl text-center transform transition-all duration-300 ease-in-out hover:scale-105 hover:bg-green-800">
+                        <p class="text-2xl font-bold text-white">{{ user.following_count|default:"0" }}</p>
+                        <p class="text-gray-400">Подписки</p>
+                    </div>
+                    <div class="bg-green-700 p-4 rounded-xl text-center transform transition-all duration-300 ease-in-out hover:scale-105 hover:bg-green-800">
+                        <p class="text-2xl font-bold text-white">{{ user.likes_count|default:"0" }}</p>
+                        <p class="text-gray-400">Лайки</p>
+                    </div>
+                </div>
+            </div>
+
+            
+        </div>
+
+        <div class="mb-8">
+            <div class="flex gap-4 border-b border-gray-700">
+                <button class="px-4 py-2 text-white font-medium border-b-2 border-green-500">
+                    Публикации
+                </button>
+                <button class="px-4 py-2 text-gray-400 font-medium hover:text-white transition-colors">
+                    Избранное
+                </button>
+                <button class="px-4 py-2 text-gray-400 font-medium hover:text-white transition-colors">
+                    Коллекции
+                </button>
+            </div>
+        </div>
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <h2 class="text-3xl font-extrabold tracking-tight text-blue-900 sm:text-4xl">
+            </h2>
+            <div class="mt-8 grid gap-6 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
+                {% for post in page_obj %}
+                <div class="relative group">
+                    <a href="{% url "detail" id=post.id %}">
+                        <div class="relative w-full h-80 bg-white rounded-lg overflow-hidden sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1">
+                            <img src="{{ post.image.url }}" alt="{{ post.title }}" class="w-full h-full object-cover group-hover:opacity-75 transition-opacity duration-300">
+                            <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <p class="text-white text-lg font-semibold px-4 text-center">{{ post.description }}</p>
+                            </div>
+                        </div>
+                        <h3 class="mt-2 text-lg text-gray-500">
+                            <a href="#" class="px-0 py-2 text-gray-400 font-medium hover:text-white transition-colors">
+                                <span class="inset-0"></span>
+                                {{ post.title }}
+                            </a>
+                        </h3>
+                        <div class="flex items-center gap-[6px]">
+                            <img src="{{ post.author.image.image.url }}" alt="" class="w-6 h-6 rounded-[50px]">
+                            <p class="text-base font-semibold text-gray-400">{{ post.author.username }}</p>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div class="flex justify-center mt-8">
+                <div class="inline-flex items-center space-x-2">
+                    {% if page_obj.has_previous %}
+                    <a href="?page=1" class="px-4 py-2 text-sm font-semibold text-white bg-gray-700 hover:bg-gray-600 rounded-l-lg transition-colors">Начало</a>
+                    <a href="?page={{ page_obj.previous_page_number }}" class="px-4 py-2 text-sm font-semibold text-white bg-gray-700 hover:bg-gray-600 transition-colors">Назад</a>
+                    {% else %}
+                    <span class="px-4 py-2 text-sm font-semibold text-gray-400 bg-gray-700 rounded-l-lg">Начало</span>
+                    <span class="px-4 py-2 text-sm font-semibold text-gray-400 bg-gray-700">Назад</span>
+                    {% endif %}
+                    
+                    <span class="px-4 py-2 text-sm font-semibold text-white bg-gray-700">Стр {{ page_obj.number }} из {{page_obj.paginator.num_pages }}</span>
+                    
+                    {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}" class="px-4 py-2 text-sm font-semibold text-white bg-gray-700 hover:bg-gray-600 transition-colors">Вперед</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}" class="px-4 py-2 text-sm font-semibold text-white bg-gray-700 hover:bg-gray-600 rounded-r-lg transition-colors">Конец</a>
+                    {% else %}
+                    <span class="px-4 py-2 text-sm font-semibold text-gray-400 bg-gray-700">Вперед</span>
+                    <span class="px-4 py-2 text-sm font-semibold text-gray-400 bg-gray-700 rounded-r-lg">Последний</span>
+                    {% endif %}
+                </div>
+            </div>
+            
+        </div>
+        
+        
+        
+        {% comment %} {% include "../components/card.html" %} {% endcomment %}
+        {% comment %} <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for post in post %}
+            <div class="bg-[#2B2B2B] rounded-2xl overflow-hidden shadow-xl hover:transform hover:scale-[1.02] transition-all">
+                <img src="{{ post.image.url }}" 
+                     alt="{{ post.title }}" 
+                     class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-white mb-2">{{ post.title }}</h3>
+                    <p class="text-gray-400 mb-4">{{ post.description|truncatechars:100 }}</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-400">{{ post.created_at|date }}</span>
+                        <div class="flex gap-4">
+                            <span class="text-gray-400 flex items-center gap-1">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                </svg>
+                                {{ post.likes_count }}
+                            </span>
+                            <span class="text-gray-400 flex items-center gap-1">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                                </svg>
+                                {{ post.comments_count }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-span-full flex justify-center items-center py-12">
+                <p class="text-gray-400 text-xl">Публикации отсутствуют</p>
+            </div>
+            {% endfor %}
+        </div> {% endcomment %}
+    </div>
+</div>
+{% endblock user_profile %}

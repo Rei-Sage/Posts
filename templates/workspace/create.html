@@ -1,0 +1,50 @@
+{% extends 'workspace/base.html' %} {% block title %}Create{% endblock title %}
+{% block create %}
+
+<div class="text-white w-full bg-[#2B2B2B] shadow-md rounded-lg p-6">
+ <div class="container mx-auto px-4 py-8">
+    <form action="{% url 'create' %}" method="POST" enctype="multipart/form-data" novalidate
+          class="max-w-8xl mx-auto bg-gray-800 p-6 rounded-lg shadow-lg">
+        {% csrf_token %}
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+            <div class="w-1 h-8 bg-red-500 mr-2"></div>
+            Добавить пост
+        </h2>
+        <div class="space-y-4 mb-6">
+        
+            {{ form.as_p }}
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {% for image in form.images.all %}
+                    <div class="relative">
+                        <img src="{{ form.image }}" alt="" class="w-full h-32 object-cover rounded">
+                        <button type="button" data-image-id="{{ image.id }}"
+                                class="absolute top-2 right-2 bg-red-500 p-1 rounded-full">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor"
+                                 viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div class="flex justify-end">
+            <button type="submit"
+                    class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg transition duration-200">
+                    Добавить
+            </button>
+        </div>
+    </form>
+</div>
+</div>
+
+
+
+
+
+
+
+
+{% endblock create %}

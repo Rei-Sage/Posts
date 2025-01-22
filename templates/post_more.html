@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block more %}
+<div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <h2 class="text-3xl font-extrabold tracking-tight text-blue-900 sm:text-4xl">
+    </h2>
+    <div class="mt-8 grid gap-6 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
+        {% for post in page_obj %}
+
+        <div class="relative group">
+            <a href="{% url "detail" id=post.id %}">
+
+                <div class="relative w-full h-80 bg-white rounded-lg overflow-hidden sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1">
+                    <img src="{{ post.image.url }}" alt="{{ post.title }}" class="w-full h-full object-cover group-hover:opacity-75 transition-opacity duration-300">
+                    <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <p class="text-white text-lg font-semibold px-4 text-center">{{ post.description }}</p>
+                    </div>
+                </div>
+                <h3 class="mt-2 text-lg text-gray-500">
+                    <a href="#" class="px-0 py-2 text-gray-400 font-medium hover:text-white transition-colors">
+                        <span class="inset-0"></span>
+                        {{ post.title }}
+                    </a>
+                </h3>
+                <div class="flex items-center gap-[6px]">
+                    <img src="{{ post.author.image.image.url }}" alt="" class="w-6 h-6 rounded-[50px]">
+                    <p class="text-base font-semibold text-gray-400">{{ post.author.username }}</p>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div class="flex justify-center mt-8">
+        <div class="inline-flex items-center space-x-2">
+            {% if page_obj.has_previous %}
+            <a href="?page=1" class="px-4 py-2 text-sm font-semibold text-white bg-gray-700 hover:bg-gray-600 rounded-l-lg transition-colors">Начало</a>
+            <a href="?page={{ page_obj.previous_page_number }}" class="px-4 py-2 text-sm font-semibold text-white bg-gray-700 hover:bg-gray-600 transition-colors">Назад</a>
+            {% else %}
+            <span class="px-4 py-2 text-sm font-semibold text-gray-400 bg-gray-700 rounded-l-lg">Начало</span>
+            <span class="px-4 py-2 text-sm font-semibold text-gray-400 bg-gray-700">Назад</span>
+            {% endif %}
+            
+            <span class="px-4 py-2 text-sm font-semibold text-white bg-gray-700">Стр {{ page_obj.number }} из {{page_obj.paginator.num_pages }}</span>
+            
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="px-4 py-2 text-sm font-semibold text-white bg-gray-700 hover:bg-gray-600 transition-colors">Вперед</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}" class="px-4 py-2 text-sm font-semibold text-white bg-gray-700 hover:bg-gray-600 rounded-r-lg transition-colors">Конец</a>
+            {% else %}
+            <span class="px-4 py-2 text-sm font-semibold text-gray-400 bg-gray-700">Вперед</span>
+            <span class="px-4 py-2 text-sm font-semibold text-gray-400 bg-gray-700 rounded-r-lg">Последний</span>
+            {% endif %}
+        </div>
+    </div>
+    
+</div>
+
+
+{% endblock more %}

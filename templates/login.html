@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load static %}
+{% block creator %}
+<div class="flex flex-col md:flex-row bg-[#3B3B3B]">
+  <div class="w-full md:w-1/2 h-[232px] md:h-[615px]">
+    <img
+      src="https://animesher.com/orig/0/94/942/9421/animesher.com_photography-smile-black-and-white-942109.gif"
+      alt="Space Illustration"
+      class="object-cover w-full h-[232px] md:h-[615px]"
+    />
+  </div>
+  <div
+    class="flex items-center justify-center md:justify-start w-full md:w-1/2 p-6 md:p-12 bg-[#0f0f23] h-[615px]"
+  >
+    <div class="max-w-md w-full space-y-6">
+      <h2 class="text-4xl font-semibold text-white">Вход</h2>
+      <p class="text-white sm:text-xl md:text-2xl text-center sm:text-start">
+        Привет!!!
+      </p>
+      {% if messages %}
+      <ul>
+        {% for message in messages %}
+        <li class='text-[red]'>{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      <form action="{% url 'users:login' %}" method="POST" novalidate>
+        {% csrf_token %}
+        {% for field in form %}
+        <label for="{{ field.id_for_label }}" class="text-gray-400 text-sm mb-2 block">
+          {{ field.label }}
+        </label>
+            <div class="relative">
+              <div class='mb-[10px]'>
+                {{ field }}
+                <span class="absolute left-4  top-[27px] transform -translate-y-1/2">
+                  <img
+                    src="https://cdn.animaapp.com/projects/63aaf7e2426e9824f0350c11/releases/63aaf8f2426e9824f0350c13/img/user-4@2x.svg"
+                    alt="User Icon"
+                    class="w-5 h-5"
+                  />
+                </span>
+              </div>
+                {% if field.errors %}
+                    <div class="text-[red] text-sm mb-[6px]">{{ field.errors }}</div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <button type="submit" class="w-full py-3 bg-[#A259FF] text-white font-semibold hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 border-solid rounded-[28px]">
+          <span class='text-center'>Войти</span> 
+        </button>
+    </form>
+    <div class="mt-4 text-center">
+      <a href="{% url 'users:register' %}" class="text-white">Регистрация</a>
+      <span class="text-white mx-2">|</span>
+      <a href="{% url 'users:logout' %}" class="text-white">Выйти</a>
+  </div>
+    </div>
+  </div>
+</div>
+{% endblock creator %}

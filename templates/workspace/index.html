@@ -1,0 +1,146 @@
+{% extends "workspace/base.html" %}
+
+{% block start %}
+<div class="container mx-auto bg-[#0f0f23] p-6">
+    <div class="bg-[#0f0f23] p-6 rounded-lg container mx-auto sm:p-8 lg:flex lg:items-center lg:justify-between">
+        <div class="lg:w-2/4">
+          <h1 class="text-white text-3xl sm:text-4xl lg:text-5xl font-semibold leading-tight">
+            Workspace
+          </h1>
+        </div>
+        
+        <div class="mt-6 lg:mt-0 lg:w-2/4 lg:text-right">
+          <a href="{% url "create" %}" class="inline-block px-6 py-3 bg-blue-600 text-white text-sm sm:text-base font-medium rounded-lg shadow hover:bg-blue-700 focus:ring focus:ring-blue-300 transition">
+            Create
+          </a>
+        </div>
+    </div>
+         
+    <div class="bg-[#0f0f23] py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row gap-8">
+                <div class="bg-gray-800 p-6 rounded-lg shadow-md max-w-lg mx-auto">
+                    <form method="get" class="space-y-4">
+                        <div>
+                            <label for="title" class="block text-white font-medium">Название</label>
+                            {{filterset.form.title}}
+                        </div>
+                        
+                        <div>
+                            <label for="category" class="block text-white font-medium">Категория</label>
+                            {{filterset.form.category}}
+                        </div>
+                
+                        <div>
+                            <label class="block text-white font-medium">Дата</label>
+                            <div class="flex space-x-2">
+                                {{filterset.form.created_at}}
+                            </div>
+                        </div>
+                
+                        <div>
+                            <label class="block text-white font-medium">Теги</label>
+                            <div class="flex flex-wrap gap-2">
+                                {{filterset.form.tags}}
+
+                            </div>
+                        </div>
+                
+                        <div>
+                            <button
+                                type="submit"
+                                class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-all duration-300"
+                            >
+                                Применить фильтр
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+    
+                <div class="flex-1">
+                    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                        {% for item in page_obj %}
+                        <div class="bg-[#2B2B2B] rounded-2xl overflow-hidden shadow-xl 
+                            transform transition-all duration-300 hover:translate-y-[-8px] hover:shadow-2xl">
+                            <a href="" class="block">
+                                <img src="{{ item.image.url }}" alt="NFT Image" 
+                                    class="w-full h-64 object-cover transform transition-transform duration-300 hover:scale-110">
+                            </a>
+                            <div class="p-6 space-y-4">
+                                <h2 class="text-white text-xl font-bold">{{ item.title }}</h2>
+                                
+                                <div class="flex items-center gap-3">
+                                    <img src="{{ item.image.url }}" alt="" class="w-10 h-10 rounded-full ring-2 ring-gray-700">
+                                    <span class="text-gray-400 font-medium">{{ item.author }}</span>
+                                </div>
+                                <time class='text-white right-0' datetime="{{ item.created_at|date:'Y-m-d' }}">
+                                    {{ item.created_at|date:"d M Y" }}
+                                </time>
+                                <p class="text-gray-400 line-clamp-2">{{ item.description }}</p>
+                                <h2 class="text-white text-xl font-bold">{{ item.category }}</h2>
+
+                                <div class="flex flex-wrap gap-2">
+                                    {% for tag in item.tags.all %}
+                                    <span class="px-3 py-1 bg-[#3B3B3B] text-gray-300 text-sm rounded-full">
+                                        {{ tag.name }}
+                                    </span>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="flex justify-end gap-4 mt-4">
+                                    <a href="{% url 'update' id=item.id %}" 
+                                       class="bg-yellow-500 text-white text-sm px-4 py-2 rounded-lg hover:bg-yellow-700">
+                                        Update
+                                    </a>
+                                    <a href="{% url 'delete' id=item.id %}" 
+                                       class="bg-red-500 text-white text-sm px-4 py-2 rounded-lg hover:bg-red-700">
+                                        Delete
+                                    </a>
+
+                                </div>
+                                <a href="{% url 'detail' id=item.id %}" 
+                                class="bg-green-500 text-white text-sm px-4 py-2 rounded-lg hover:bg-green-700">
+                                 See
+                                </a>
+                                <a href="" class="block text-gray-400 hover:text-white transition-colors">
+                                    {{ item.location }}
+                                </a>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="col-span-full flex justify-center items-center py-12">
+                            <p class="text-gray-400 text-xl font-medium">Нет доступных элементов</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+    
+                    <div class="flex justify-center mt-8">
+                        <div class="inline-flex items-center space-x-2">
+                            {% if page_obj.has_previous %}
+                            <a href="?page=1" class="px-4 py-2 text-sm font-semibold text-white bg-gray-700 hover:bg-gray-600 rounded-l-lg transition-colors">Начало</a>
+                            <a href="?page={{ page_obj.previous_page_number }}" class="px-4 py-2 text-sm font-semibold text-white bg-gray-700 hover:bg-gray-600 transition-colors">Назад</a>
+                            {% else %}
+                            <span class="px-4 py-2 text-sm font-semibold text-gray-400 bg-gray-700 rounded-l-lg">Начало</span>
+                            <span class="px-4 py-2 text-sm font-semibold text-gray-400 bg-gray-700">Назад</span>
+                            {% endif %}
+                            
+                            <span class="px-4 py-2 text-sm font-semibold text-white bg-gray-700">Стр {{ page_obj.number }} из {{page_obj.paginator.num_pages }}</span>
+                            
+                            {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}" class="px-4 py-2 text-sm font-semibold text-white bg-gray-700 hover:bg-gray-600 transition-colors">Вперед</a>
+                            <a href="?page={{ page_obj.paginator.num_pages }}" class="px-4 py-2 text-sm font-semibold text-white bg-gray-700 hover:bg-gray-600 rounded-r-lg transition-colors">Конец</a>
+                            {% else %}
+                            <span class="px-4 py-2 text-sm font-semibold text-gray-400 bg-gray-700">Вперед</span>
+                            <span class="px-4 py-2 text-sm font-semibold text-gray-400 bg-gray-700 rounded-r-lg">Последний</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+
+</div>
+{% endblock start %}
