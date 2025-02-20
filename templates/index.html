@@ -2,7 +2,7 @@
 {% load static %}
 {% block content2 %}
 <div class="container mx-auto bg-[#0f0f23] relative">
-    <div class="bg-[#0f0f23] relative overflow-hidden">
+    <div class="bg-[#0f0f23] block relative lg:flex overflow-hidden">
         <div class="max-w-7xl mx-auto">
             <div class="relative z-10 pb-8 bg-[#0f0f24] sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
                 <div class="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
@@ -33,12 +33,45 @@
                 </div>
             </div>
         </div>
-        <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 ">
+        {% comment %} <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 ">
             <img class="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full" src="https://pa1.aminoapps.com/6689/1c90750668cae9ff5bf9965e0bf726f910da5418_hq.gif" %}" alt="Hero image">
+        </div> {% endcomment %}
+
+        <div id="music">
+            <audio
+              id="audio"
+              src='{% static 'img/вфтсшт.mp3' %}'
+            ></audio>
+          </div>
+        <div class="group lg:relative lg:inset-y-0 lg:right-0 lg:w-1/2 z-9999">
+            <img class="content h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full group-hover:url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpTMY3qSLuZlXo0pN6BnX2LjTVIdfucwNqxg&s') transition-opacity duration-300" 
+            src="https://pa1.aminoapps.com/6689/1c90750668cae9ff5bf9965e0bf726f910da5418_hq.gif" 
+            alt="Hero image">
         </div>
     </div>
 
 </div>
+<script>
+    const audio = document.getElementById("audio");
+    const content = document.querySelector(".content");
+
+    content.addEventListener("mouseover", () => {
+      content.classList.add("active");
+      audio.play();
+      console.log(audio)
+    });
+
+    content.addEventListener("mouseout", () => {
+      // if (audio.currentTime > 0 && !audio.paused) {
+      if (!audio.paused) {
+        audio.pause();
+      }
+    });
+    audio.addEventListener("ended", () => {
+      audio.currentTime = 0
+      audio.play()
+    });
+  </script>
 {% endblock %}
 
 {% block content %}
